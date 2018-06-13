@@ -1,0 +1,45 @@
+#!/usr/bin/python
+
+import sys, getopt, json
+
+
+'''
+Print usage
+'''
+def usage():
+  print "Usage: json.py <string>"
+
+
+'''
+Run the main function
+'''
+def main(argv):
+
+  # Handle usage.
+  try:
+    opts, args = getopt.getopt(argv,"h", ["help"])
+  except getopt.GetoptError:
+    print "Error parsing options"
+    sys.exit(2)
+
+  for opt, arg in opts:
+    if opt in ("-h", "--help"):
+       usage()
+       sys.exit()
+
+  # One and only one arg.
+  if len(argv) != 1:
+    usage()
+    sys.exit() 
+
+  # Make the magic happen.
+  value = "Hello " + str( sys.argv[1] )
+  try:
+    print json.dumps({"message": str( value ) })
+  except ValueError: 
+    print 'Error encoding JSON'
+    sys.exit(1)
+
+
+if __name__ == "__main__":
+  main(sys.argv[1:])
